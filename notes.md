@@ -3,15 +3,14 @@
 Consider how wound healing can be described by the Porous-Fisher equation:
 
 $$
-\frac{\partial u}{\partial t} 
-= 
-\frac{\partial}{\partial x} 
+\frac{\partial u}{\partial t} =
+\frac{\partial}{\partial x}
 \left(
-\alpha \left(\frac{u}{K}\right)^m 
+\alpha \left(\frac{u}{K}\right)^m
 \frac{\partial u}{\partial x}
-\right) 
-+ 
-\beta u \left(1-\frac{u}{K}\right)
+\right)
++
+\beta u \left(1-\frac{u}{K}\right).
 $$
 
 where $u(x,t)$ denotes the density of cells and $K > 0$ is the carrying capacity. Consider $0 \leq x \leq L$ and $t > 0$, subject to the following initial and boundary conditions:
@@ -45,7 +44,7 @@ where the cell population is initially zero.
 We discretise the initial-boundary value problem in space using the finite volume method. Averaging is used to discretise the nonlinear diffusion term, and a non-uniform mesh is allowed with nodes
 
 $$
-x=x_i, \qquad i=1,\dots,N,
+x = x_i, \qquad i=1,\dots,N,
 $$
 
 where
@@ -81,15 +80,11 @@ $$
 Define the nonlinear diffusivity and reaction term as
 
 $$
-D(u_i)
-=
-\alpha \left(\frac{u_i}{K}\right)^m,
+D(u_i) = \alpha \left(\frac{u_i}{K}\right)^m,
 $$
 
 $$
-R(u_i)
-=
-\beta u_i \left(1-\frac{u_i}{K}\right).
+R(u_i) = \beta u_i \left(1-\frac{u_i}{K}\right).
 $$
 
 For a non-uniform mesh, define the node spacings
@@ -103,27 +98,18 @@ The control volume lengths are
 
 $$
 V_1 = \frac{h_1}{2},
-$$
-
-$$
+\qquad
 V_i = \frac{h_{i-1}+h_i}{2},
-\qquad i=2,\dots,N-1,
-$$
-
-$$
+\qquad
 V_N = \frac{h_{N-1}}{2}.
 $$
 
 Using East and West notation, define the averaged diffusivities at the west and east faces as
 
 $$
-D_W
-=
-\frac{D(u_{i-1})+D(u_i)}{2},
+D_{W,i} = \frac{D(u_{i-1})+D(u_i)}{2},
 \qquad
-D_E
-=
-\frac{D(u_i)+D(u_{i+1})}{2}.
+D_{E,i} = \frac{D(u_i)+D(u_{i+1})}{2}.
 $$
 
 The spatial derivatives at the west and east faces are approximated by
@@ -132,11 +118,7 @@ $$
 \frac{\partial u}{\partial x}(w_i,t)
 \approx
 \frac{u_i-u_{i-1}}{h_{i-1}},
-$$
-
-and
-
-$$
+\qquad
 \frac{\partial u}{\partial x}(e_i,t)
 \approx
 \frac{u_{i+1}-u_i}{h_i}.
@@ -150,7 +132,8 @@ g_i(\vec{u})
 \begin{cases}
 \dfrac{1}{V_1}
 \left[
-- D_E \dfrac{\partial u}{\partial x}(e_1,t)
+- D_{E,1}
+\dfrac{\partial u}{\partial x}(e_1,t)
 \right]
 +
 R(u_1),
@@ -158,9 +141,11 @@ R(u_1),
 \\[12pt]
 \dfrac{1}{V_i}
 \left[
-D_W \dfrac{\partial u}{\partial x}(w_i,t)
+D_{W,i}
+\dfrac{\partial u}{\partial x}(w_i,t)
 -
-D_E \dfrac{\partial u}{\partial x}(e_i,t)
+D_{E,i}
+\dfrac{\partial u}{\partial x}(e_i,t)
 \right]
 +
 R(u_i),
@@ -168,7 +153,8 @@ R(u_i),
 \\[12pt]
 \dfrac{1}{V_N}
 \left[
-D_W \dfrac{\partial u}{\partial x}(w_N,t)
+D_{W,N}
+\dfrac{\partial u}{\partial x}(w_N,t)
 \right]
 +
 R(u_N),
