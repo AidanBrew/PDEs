@@ -91,7 +91,6 @@ def main():
     maxiters = 100 # Maximum number of iterations
 
     # Animation of numerical solution
-    # Animation of numerical solution
     t = np.arange(0, T + 0.5, 0.5)
 
     u1 = numerical_solution(D, R, f, x, t)
